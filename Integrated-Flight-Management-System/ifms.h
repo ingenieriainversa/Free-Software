@@ -2,9 +2,9 @@
 
 /* Definicion de constantes */
 const int max_char_codigo = 6;	// Numero maximo de caracteres para el codigo de vuelo.
-const int max_char_hora = 5;	  // Numero maximo de caracteres para la hora.
-const int max_char_mes = 2;		  // Numero maximo de caracteres para el mes.
-const int max_meses = 24;		    // Numero maximo de meses.
+const int max_char_hora = 5;	// Numero maximo de caracteres para la hora.
+const int max_char_mes = 2;	// Numero maximo de caracteres para el mes.
+const int max_meses = 24;	// Numero maximo de meses.
 const int max_vuelos_mes = 50;	// Numero maximo de vuelos por cada mes.
 const int max_vuelos_total = max_meses * max_vuelos_mes; // Numero maximo de vuelos en total.
 
