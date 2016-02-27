@@ -18,4 +18,24 @@ public class Library
         users = new ArrayList<String>();
         items = new ArrayList<String>();
     }
+    
+    public String getName()
+    {
+        return name;
+    }
+    
+    public String getAddress()
+    {
+        return address;
+    }
+    
+    public int getNumEmployees()
+    {
+        return numEmployees;
+    }
+    
+    public boolean getOpen()
+    {
+        return open;
+    }
 }
