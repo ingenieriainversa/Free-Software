@@ -19,23 +19,8 @@ public class Library
         items = new ArrayList<String>();
     }
     
-    public String getName()
-    {
-        return name;
-    }
-    
-    public String getAddress()
-    {
-        return address;
-    }
-    
-    public int getNumEmployees()
-    {
-        return numEmployees;
-    }
-    
-    public boolean getOpen()
-    {
-        return open;
-    }
+    public String getName(){return name;}
+    public String getAddress(){return address;}
+    public int getNumEmployees(){return numEmployees;}
+    public boolean getOpen(){return open;}
 }
