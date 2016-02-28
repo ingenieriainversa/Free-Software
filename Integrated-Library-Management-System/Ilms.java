@@ -26,27 +26,40 @@ public class Library
 {
     private String name;
     private String address;
-    private int numEmployees;
     private boolean open;
+    private int numEmployees;
     private ArrayList<User> users;
 
-    public Library(String name, String address, int numEmployees)
+    public Library(String name, String address)
     {
         this.name = name;
         this.address = address;
-        this.numEmployees = numEmployees;
         this.open = true;
         users = new ArrayList<User>();
     }
-
+    
+    /* Selectors methods */
     public String getName(){return name;}
     public String getAddress(){return address;}
-    public int getNumEmployees(){return numEmployees;}
     public int getNumUsers(){return users.size();}
     public boolean getOpen(){return open;}
-
-    // Users code
-
+    public int getNumEmployees()
+    {
+        numEmployees = 0;
+        for(User user : users) {
+            if(user.getUserEmployee() == true) {
+                numEmployees++;
+            }
+        }
+        return numEmployees;
+    }
+    
+    /* Users methods */
+    public void createUser(String name, String surname, int age, boolean employee)
+    {
+        users.add(new User(name, surname, age, employee));
+    }
+    
     public void addUser(User user)
     {
         users.add(user);
