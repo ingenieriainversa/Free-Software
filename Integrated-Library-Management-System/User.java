@@ -25,19 +25,22 @@ public class User
     private String name;
     private String surname;
     private int age;
+    private boolean employee;
     private boolean active;
-
-    public User(String name, String surname, int age)
+    
+    public User(String name, String surname, int age, boolean employee)
     {
         this.name = name;
         this.surname = surname;
         this.age = age;
+        this.employee = employee;
         active = true;
     }
     
     public String getUserName(){return name;}
     public String getUserSurname(){return surname;}
     public int getUserAge(){return age;}
+    public boolean getUserEmployee(){return employee;}
     public boolean getUserActive(){return active;}
-    public String getDetails(){return name + " " + surname + ", " + age + " - " + "Active: " + active;}
+    public String getDetails(){return name+"|"+surname+"|"+age+"|"+employee+"|"+active;}
 }
