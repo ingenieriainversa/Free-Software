@@ -17,4 +17,5 @@ public class User
   public String getUserSurname(){return surname;}
   public int getUserAge(){return age;}
   public boolean getUserActive(){return active;}
+  public String getDetails(){return name + " " + surname + ", " + age + " - " + "Active: " + active;}
 }
