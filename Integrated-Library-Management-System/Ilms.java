@@ -29,8 +29,9 @@ public class Library
     private boolean open;
     private int numEmployees;
     private ArrayList<User> users;
-    private ArrayList<Items> items;
+    private ArrayList<Item> items;
     private int nextUserId;
+    private int nextItemId;
 
     public Library(String name, String address)
     {
@@ -38,7 +39,9 @@ public class Library
         this.address = address;
         this.open = true;
         users = new ArrayList<User>();
+        items = new ArrayList<Item>();
         nextUserId = 1;
+        nextItemId = 1;
     }
     
     /* Selectors methods */
@@ -120,6 +123,57 @@ public class Library
             System.out.println("Index cannot be negative: " + index);
             valid = false;
         } else if(index >= users.size()) {
+            System.out.println("Index is too large: " + index);
+            valid = false;
+        } else {
+            valid = true;
+        }
+        return valid;
+    }
+    
+    /* Items methods */
+    public void createItem(String title)
+    {
+        items.add(new Item(nextItemId, title));
+        nextItemId++;
+    }
+    
+    public void addItem(Item item)
+    {
+        items.add(item);
+    }
+
+    public void listAllItems()
+    {
+        for(Item item : items) {
+            System.out.println(item.getDetails());
+        }
+    }
+
+    public void listByTitle(String title)
+    {
+        for(Item item : items) {
+            if(item.getItemTitle().contains(title)) {
+                System.out.println(item.getDetails());
+            }
+        }
+    }
+
+    public void removeItem(int index)
+    {
+        if(indexItemsValid(index)) {
+            items.remove(index);
+        }
+    }
+
+    private boolean indexItemsValid(int index)
+    {
+        boolean valid;
+
+        if(index < 0) {
+            System.out.println("Index cannot be negative: " + index);
+            valid = false;
+        } else if(index >= items.size()) {
             System.out.println("Index is too large: " + index);
             valid = false;
         } else {
