@@ -29,6 +29,8 @@ public class Library
     private boolean open;
     private int numEmployees;
     private ArrayList<User> users;
+    private ArrayList<Items> items;
+    private int nextUserId;
 
     public Library(String name, String address)
     {
@@ -36,6 +38,7 @@ public class Library
         this.address = address;
         this.open = true;
         users = new ArrayList<User>();
+        nextUserId = 1;
     }
     
     /* Selectors methods */
@@ -54,10 +57,31 @@ public class Library
         return numEmployees;
     }
     
+    public User getUser(int userId)
+    {
+        if((userId >= 1) && (userId < nextUserId)) {
+            User selectedUser = users.get(userId - 1);
+            if(selectedUser.getUserId() != userId) {
+                System.out.println("Internal error: User id " +
+                                   selectedUser.getUserId() +
+                                   " was returned instead of " +
+                                   userId);
+                selectedUser = null;
+            }
+            return selectedUser;
+        }
+        else {
+            System.out.println("User id: " + userId +
+                               " does not exist.");
+            return null;
+        }
+    }
+    
     /* Users methods */
     public void createUser(String name, String surname, int age, boolean employee)
     {
-        users.add(new User(name, surname, age, employee));
+        users.add(new User(nextUserId, name, surname, age, employee));
+        nextUserId++;
     }
     
     public void addUser(User user)
