@@ -19,28 +19,44 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class User
 {
     private String name;
     private String surname;
     private int age;
+    private int id;
     private boolean employee;
     private boolean active;
+    private String timestamp;
+    private Roles rol;
     
-    public User(String name, String surname, int age, boolean employee)
+    public User(int id, String name, String surname, int age, boolean employee)
     {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.employee = employee;
         active = true;
+        timestamp = timestamp();
     }
     
+    private String timestamp(){
+        Date currentDate=new Date(); 
+        SimpleDateFormat spanishFormat = new SimpleDateFormat("yyyy/MM/dd H:mm:ss");
+        String timestamp = spanishFormat.format(currentDate);
+        return timestamp;
+    }
+    
+    public int getUserId(){return id;}
     public String getUserName(){return name;}
     public String getUserSurname(){return surname;}
     public int getUserAge(){return age;}
     public boolean getUserEmployee(){return employee;}
     public boolean getUserActive(){return active;}
-    public String getDetails(){return name+"|"+surname+"|"+age+"|"+employee+"|"+active;}
+    public String getTimestamp(){return timestamp;};
+    public String getDetails(){return id+"|"+name+"|"+surname+"|"+age+"|"+employee+"|"+active+"|"+timestamp;}
 }
