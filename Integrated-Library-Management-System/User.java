@@ -24,10 +24,10 @@ import java.text.SimpleDateFormat;
 
 public class User
 {
+    private int id;
     private String name;
     private String surname;
     private int age;
-    private int id;
     private boolean employee;
     private boolean active;
     private String timestamp;
