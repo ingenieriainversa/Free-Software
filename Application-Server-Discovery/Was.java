@@ -24,23 +24,44 @@ package was;
 
 public class Was {
 
-	public String producto;
-	public static int version;
+	public String name;
+	public String version;
+	public String profile;
+	public String cell;
+	public String node;
+	public String server;
+	public String app
 
 	public Was() {
-		producto = "IBM WebSphere application Server Network Deployment";
-		version = 8;
+		name = "IBM WebSphere application Server Network Deployment";
+		version = "8.5.5.0";
 	}
 
 	public void printData() {
-		System.out.printf("Producto: %s, Version: %d\n", producto, version);
+		System.out.printf("%s;%s;%s;%s;%s;%s;%s\n", name, version, profile, cell, node, server, app);
 	}
 
-	public String getProducto() {
+	public String getName() {
 		return producto;
 	}
 
-	public void setProducto(String producto) {
-		this.producto = producto;
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 }
