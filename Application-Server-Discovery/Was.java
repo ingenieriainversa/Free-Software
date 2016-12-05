@@ -22,27 +22,32 @@
 
 package was;
 
-public class Was {
+import main.FileExplorer;
 
+public class Was {
+	
 	public String name;
 	public String version;
 	public String profile;
 	public String cell;
 	public String node;
 	public String server;
-	public String app
+	public String app;
+	public FileExplorer fe;
 
 	public Was() {
 		name = "IBM WebSphere application Server Network Deployment";
 		version = "8.5.5.0";
+		fe = new FileExplorer();
 	}
-
+	
 	public void printData() {
 		System.out.printf("%s;%s;%s;%s;%s;%s;%s\n", name, version, profile, cell, node, server, app);
+		fe.search("c:\\Unix\\", "serverindex.xml");
 	}
 
 	public String getName() {
-		return producto;
+		return name;
 	}
 
 	public void setName(String name) {
