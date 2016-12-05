@@ -49,7 +49,7 @@ public class MyHandler extends DefaultHandler {
         if (qName.equalsIgnoreCase("serverEntries")) {
             //create a new Jvm and put it in Map
             String serverName = attributes.getValue("serverName");
-            //initialize Jvm object and set id attribute
+            //initialize Jvm object and set serverName attribute
             jvm = new Jvm();
             jvm.setServerName(serverName);
             //initialize list
@@ -69,4 +69,13 @@ public class MyHandler extends DefaultHandler {
 			jvmList.add(jvm);
 		}
 	}
+	
+	@Override
+    public void characters(char ch[], int start, int length) throws SAXException {
+
+        if (bDeployedApplications) {
+            jvm.setDeployedApplications(new String(ch, start, length));
+            bDeployedApplications = false;
+        }
+    }
 }
