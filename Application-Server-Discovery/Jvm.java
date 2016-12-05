@@ -44,7 +44,7 @@ public class Jvm {
 
 	@Override
 	public String toString() {
-		return "Employee:: serverName=" + this.serverName + " deployedApplications=" + this.deployedApplications;
+		return "serverName=" + this.serverName + " deployedApplications=" + this.deployedApplications;
 	}
 
 }
