@@ -22,29 +22,81 @@
 
 package was;
 
-public class Jvm {
-	private String serverName;
-	private String deployedApplications;
+import java.util.ArrayList;
 
+public class Jvm {
+	private String hostName;
+	private String serverName;
+	private String serverType;
+	private ArrayList<EndPoint> endPoints;
+	private ArrayList<App> apps;
+	
+	/* Jvm class constructor:
+	 * @hostName: Jvm hostName.
+	 * @serverName: Jvm serverName.
+	 * @serverType: Jvm serverType.
+	 * @apps: Jvm apps array list.
+	 * @endPoints: Jvm endPoints array list.
+	 */
+	public Jvm(String hostName, String serverName, String serverType, ArrayList<App> apps, ArrayList<EndPoint> endPoints) {
+		setHostName(hostName);
+		setServerName(serverName);
+		setServerType(serverType);
+		setApps(apps);
+		setEndPoints(endPoints);
+	}
+	
+	public String getHostName() {
+		return hostName;
+	}
+	
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
+	}
+	
 	public String getServerName() {
 		return serverName;
 	}
-
+	
 	public void setServerName(String serverName) {
 		this.serverName = serverName;
 	}
-
-	public String getDeployedApplications() {
-		return deployedApplications;
+	
+	public String getServerType() {
+		return serverType;
 	}
-
-	public void setDeployedApplications(String deployedApplications) {
-		this.deployedApplications = deployedApplications;
+	
+	public void setServerType(String serverType) {
+		this.serverType = serverType;
 	}
-
-	@Override
-	public String toString() {
-		return "serverName=" + this.serverName + " deployedApplications=" + this.deployedApplications;
+	
+	public ArrayList<App> getApps() {
+		return apps;
 	}
+	
+	public void setApps(ArrayList<App> apps) {
+		this.apps = apps;
+	}
+	
+	public ArrayList<EndPoint> getEndPoints() {
+		return endPoints;
+	}
+	
+	public void setEndPoints(ArrayList<EndPoint> endPoints) {
+		this.endPoints = endPoints;
+	}
+	
+	public void printEndPointsData() {
+		int index = 0;
+		
+		// EndPoints array iteration
+		while(index < getEndPoints().size()) {
+			EndPoint endPoint = getEndPoints().get(index);
+			
+			// Print jvm data
+			System.out.printf("%s;%s;%s;%s\n", getHostName(), getServerName(), getServerType(), endPoint.printData());
 
+			++index;
+		}
+	}
 }
