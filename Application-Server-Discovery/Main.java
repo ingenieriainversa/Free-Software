@@ -22,23 +22,33 @@
 
 package main;
 
-import was.Was;
+import java.util.ArrayList;
+
+import was.Jvm;
+import was.ServerindexParser;
 
 public class Main {
 	
-	private static Was var;
+	private static ServerindexParser serverindexXml;
+	private static ArrayList<Jvm> jvms;
 	
 	public static void main(String[] args) {
-		setVar(new Was());
-		var.printData();
-	}
+		serverindexXml = new ServerindexParser();
+		
+		serverindexXml.parse("src/was/serverindex.xml");
+		
+		jvms = serverindexXml.getJvms();
+		
+		int index = 0;
+		
+		// Jvms array iteration
+		while(index < jvms.size()) {
+			Jvm jvm = jvms.get(index);
+			
+			// Print jvm data
+			jvm.printEndPointsData();
 
-	public static Was getVar() {
-		return var;
+			++index;
+		}
 	}
-
-	public static void setVar(Was var) {
-		Main.var = var;
-	}
-
 }
