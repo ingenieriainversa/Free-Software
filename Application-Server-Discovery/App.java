@@ -33,7 +33,8 @@ public class App {
 	}
 	
 	public String getName() {
-		return name;
+		String[] ear = name.split("/");
+		return ear[0];
 	}
 	
 	public void setName(String name) {
