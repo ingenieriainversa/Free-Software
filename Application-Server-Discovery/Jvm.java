@@ -86,15 +86,20 @@ public class Jvm {
 		this.endPoints = endPoints;
 	}
 	
-	public void printEndPointsData() {
+	public void printEndPointsData(String endPointName) {
 		
 		// EndPoints array iteration
 		int index = 0;
 		while(index < getEndPoints().size()) {
 			EndPoint endPoint = getEndPoints().get(index);
 			
-			// Print jvm data
-			System.out.printf("%s;%s;%s;%s\n", getHostName(), getServerName(), getServerType(), endPoint.printData());
+			if(endPointName.isEmpty()) {
+				// Print jvm data
+				System.out.printf("%s;%s;%s;%s\n", getHostName(), getServerName(), getServerType(), endPoint.printData());
+			} else if(endPoint.getEndPointName().equals(endPointName)){
+				// Print jvm data
+				System.out.printf("%s;%s;%s;%s\n", getHostName(), getServerName(), getServerType(), endPoint.printData());
+			}
 			++index;
 		}
 	}
