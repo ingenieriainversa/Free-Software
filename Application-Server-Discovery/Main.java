@@ -33,20 +33,23 @@ public class Main {
 	private static ArrayList<Jvm> jvms;
 	
 	public static void main(String[] args) {
+		
+		// New instance of ServerindexParser class
 		serverindexXml = new ServerindexParser();
 		
+		// Parse serverindex.xml file
 		serverindexXml.parse("src/was/serverindex.xml");
 		
+		// Get Jvms ArrayList
 		jvms = serverindexXml.getJvms();
 		
-		int index = 0;
-		
 		// Jvms array iteration
+		int index = 0;
 		while(index < jvms.size()) {
 			Jvm jvm = jvms.get(index);
 			
-			// Print jvm data
-			jvm.printEndPointsData();
+			// For each Jvm print their apps data
+			jvm.printAppsData();
 
 			++index;
 		}
