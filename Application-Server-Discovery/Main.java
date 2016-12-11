@@ -28,16 +28,19 @@ import was.Jvm;
 import was.ServerindexParser;
 
 public class Main {
-
+	private static GetOpt go;
+	private static FileExplorer search;
 	private static ServerindexParser serverindexXml;
 	private static ArrayList<Jvm> jvms;
+	private static String filename;
+	private static String endPointName;
 
 	public static void main(String[] args) {
-		GetOpt go = new GetOpt(args, "hf:e:");
+		go = new GetOpt(args, "hf:e:");
 		go.optErr = true;
 		int ch = -1;
-		String filename = "";
-		String endPointName = "";
+		filename = "";
+		endPointName = "";
 		String usage = "Usage: -f \"/path/to/serverindex.xml\" | -e \"endPointName\" | -h";
 		
 		if(args.length == 0) {
@@ -57,7 +60,13 @@ public class Main {
 				}
 			}
 		}
-
+		
+		// New instance of FileExplorer class
+		search = new FileExplorer();
+		
+		// Find profileRegistry.xml file
+		search.searchFile("/aplicaciones", "profileRegistry.xml");
+		
 		// New instance of ServerindexParser class
 		serverindexXml = new ServerindexParser();
 
