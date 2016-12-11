@@ -48,7 +48,7 @@ public class Main {
 		while(index < jvms.size()) {
 			Jvm jvm = jvms.get(index);
 			
-			// For each Jvm print their apps data
+			// For each Jvm print data
 			jvm.printAppsData();
 
 			++index;
