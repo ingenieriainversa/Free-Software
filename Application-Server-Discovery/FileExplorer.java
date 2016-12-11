@@ -25,19 +25,29 @@ package main;
 import java.io.File;
 
 public class FileExplorer {
+	
+	private static String absolutePathToFile;
 
-	public void search(String path, String file) {
+	public String searchFile(String path, String file) {
 
-		File root = new File(path);
-		File[] list = root.listFiles();
+        File root = new File(path);
+        File[] list = root.listFiles();
 
-		if (list == null)
-			return;
+        if (list == null) {
+        	return absolutePathToFile;
+        }
 
-		for (File f : list) {
-			if (f.isFile() && f.getName().equals(file)) {
-				System.out.println("File:" + f.getAbsoluteFile());
-			}
-		}
+        for (File f : list) {
+            if (f.isDirectory()) {
+            	searchFile(f.getAbsolutePath(), file);
+            	if (f.isFile() && f.getName().equals(file)) {
+            		absolutePathToFile = f.getAbsoluteFile().toString();
+            	}
+            }
+            else if (f.isFile() && f.getName().equals(file)){
+            	absolutePathToFile = f.getAbsoluteFile().toString();
+            }
+        }
+		return absolutePathToFile;
 	}
 }
