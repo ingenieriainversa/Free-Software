@@ -87,16 +87,35 @@ public class Jvm {
 	}
 	
 	public void printEndPointsData() {
-		int index = 0;
 		
 		// EndPoints array iteration
+		int index = 0;
 		while(index < getEndPoints().size()) {
 			EndPoint endPoint = getEndPoints().get(index);
 			
 			// Print jvm data
 			System.out.printf("%s;%s;%s;%s\n", getHostName(), getServerName(), getServerType(), endPoint.printData());
-
 			++index;
+		}
+	}
+	
+	public void printAppsData() {
+		
+		// Apps array iteration
+		int appIndex = 0;
+		while(appIndex < getApps().size()) {
+			App app = getApps().get(appIndex);
+			
+			// EndPoints array iteration
+			int endPointIndex = 0;
+			while(endPointIndex < getEndPoints().size()) {
+				EndPoint endPoint = getEndPoints().get(endPointIndex);
+				
+				// Print jvm data
+				System.out.printf("%s;%s;%s;%s;%s\n", getHostName(), getServerName(), getServerType(), endPoint.printData(), app.getName());
+				++endPointIndex;
+			}
+			++appIndex;
 		}
 	}
 }
