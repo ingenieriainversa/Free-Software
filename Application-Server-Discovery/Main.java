@@ -28,28 +28,53 @@ import was.Jvm;
 import was.ServerindexParser;
 
 public class Main {
-	
+
 	private static ServerindexParser serverindexXml;
 	private static ArrayList<Jvm> jvms;
-	
+
 	public static void main(String[] args) {
+		GetOpt go = new GetOpt(args, "hf:e:");
+		go.optErr = true;
+		int ch = -1;
+		String filename = "";
+		String endPointName = "";
+		String usage = "Usage: -f \"/path/to/serverindex.xml\" | -e \"endPointName\" | -h";
 		
+		if(args.length == 0) {
+			System.out.println(usage);
+            System.exit(0);
+		} else {
+			while ((ch = go.getopt()) != GetOpt.optEOF) {
+				if ((char) ch == 'f') {
+					filename = go.optArgGet();
+				} else if ((char) ch == 'e') {
+					endPointName = go.optArgGet();
+				} else if ((char) ch == 'h') {
+					System.out.println(usage);
+		            System.exit(0);
+				} else {
+					System.exit(1);
+				}
+			}
+		}
+
 		// New instance of ServerindexParser class
 		serverindexXml = new ServerindexParser();
-		
+
 		// Parse serverindex.xml file
-		serverindexXml.parse("src/was/serverindex.xml");
-		
+		serverindexXml.parse(filename);
+
 		// Get Jvms ArrayList
 		jvms = serverindexXml.getJvms();
-		
+
 		// Jvms array iteration
 		int index = 0;
-		while(index < jvms.size()) {
+		while (index < jvms.size()) {
 			Jvm jvm = jvms.get(index);
-			
+
 			// For each Jvm print data
-			jvm.printAppsData();
+			jvm.printEndPointsData(endPointName);
+			// jvm.printAppsData();
 
 			++index;
 		}
