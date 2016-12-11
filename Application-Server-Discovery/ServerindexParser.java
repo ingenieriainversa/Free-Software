@@ -46,8 +46,6 @@ public class ServerindexParser {
 	public void parse(String file) {
 		
 		jvms = new ArrayList<Jvm>();
-		apps = new ArrayList<App>();
-		endPoints = new ArrayList<EndPoint>();
 		
 		try {
 			
@@ -66,6 +64,9 @@ public class ServerindexParser {
 			// serverindex children nodes iteration
 			NodeList serverindexChildNodes = serverindex.getChildNodes();
 			for (int a = 0; a < serverindexChildNodes.getLength(); a++) {
+				
+				endPoints = new ArrayList<EndPoint>();
+				apps = new ArrayList<App>();
 				
 				Node serverEntries = serverindexChildNodes.item(a);
 				if (serverEntries instanceof Element) {
