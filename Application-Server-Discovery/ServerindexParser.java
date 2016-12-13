@@ -56,13 +56,13 @@ public class ServerindexParser {
 			Document doc = documentBuilder.parse(new InputSource(new FileInputStream(file)));
 
 			// Get serverindex root node
-			Element serverindex = doc.getDocumentElement();
+			Element serverindexNode = doc.getDocumentElement();
 			
 			// Get hostName attribute from serverindex root node
-			String hostName = serverindex.getAttributes().getNamedItem("hostName").getTextContent();
+			String hostName = serverindexNode.getAttributes().getNamedItem("hostName").getTextContent();
 			
 			// serverindex children nodes iteration
-			NodeList serverindexChildNodes = serverindex.getChildNodes();
+			NodeList serverindexChildNodes = serverindexNode.getChildNodes();
 			for (int a = 0; a < serverindexChildNodes.getLength(); a++) {
 				
 				endPoints = new ArrayList<EndPoint>();
