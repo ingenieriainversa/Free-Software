@@ -24,8 +24,8 @@ package was;
 
 public class Profile {
 	
-	private boolean isAReservationTicket;
-	private boolean isDefault;
+	private String isAReservationTicket;
+	private String isDefault;
 	private String name;
 	private String path;
 	private String template;
@@ -37,27 +37,27 @@ public class Profile {
 	 * @path: Profile path.
 	 * @template: Profile template.
 	 */
-	public Profile(boolean isAReservationTicket, boolean isDefault, String name, String path, String template) {
-		setAReservationTicket(isAReservationTicket);
-		setDefault(isDefault);
+	public Profile(String isAReservationTicket, String isDefault, String name, String path, String template) {
+		setIsAReservationTicket(isAReservationTicket);
+		setIsDefault(isDefault);
 		setName(name);
 		setPath(path);
 		setTemplate(template);
 	}
 
-	public boolean isAReservationTicket() {
+	public String getIsAReservationTicket() {
 		return isAReservationTicket;
 	}
 
-	public void setAReservationTicket(boolean isAReservationTicket) {
+	public void setIsAReservationTicket(String isAReservationTicket) {
 		this.isAReservationTicket = isAReservationTicket;
 	}
 
-	public boolean isDefault() {
+	public String getIsDefault() {
 		return isDefault;
 	}
 
-	public void setDefault(boolean isDefault) {
+	public void setIsDefault(String isDefault) {
 		this.isDefault = isDefault;
 	}
 
@@ -83,5 +83,9 @@ public class Profile {
 
 	public void setTemplate(String template) {
 		this.template = template;
+	}
+	
+	public void printProfileData() {
+		System.out.printf("%s;%s;%s;%s;%s\n", getIsAReservationTicket(), getIsDefault(), getName(), getPath(), getTemplate());
 	}
 }
