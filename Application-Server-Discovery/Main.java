@@ -24,68 +24,92 @@ package main;
 
 import java.util.ArrayList;
 
-import was.Jvm;
-import was.ServerindexParser;
+import was.Profile;
+//import was.Jvm;
+import was.ProfileRegistryParser;
+//import was.ServerindexParser;
 
 public class Main {
-	private static GetOpt go;
+//	private static GetOpt go;
 	private static FileExplorer search;
-	private static ServerindexParser serverindexXml;
-	private static ArrayList<Jvm> jvms;
-	private static String filename;
-	private static String endPointName;
+	private static ProfileRegistryParser profileRegistryXml;
+	private static ArrayList<Profile> profiles;
+//	private static ServerindexParser serverindexXml;
+//	private static ArrayList<Jvm> jvms;
+//	private static String serverindexPathToFile;
+//	private static String endPointName;
 
 	public static void main(String[] args) {
-		go = new GetOpt(args, "hf:e:");
-		go.optErr = true;
-		int ch = -1;
-		filename = "";
-		endPointName = "";
-		String usage = "Usage: -f \"/path/to/serverindex.xml\" | -e \"endPointName\" | -h";
-		
-		if(args.length == 0) {
-			System.out.println(usage);
-            System.exit(0);
-		} else {
-			while ((ch = go.getopt()) != GetOpt.optEOF) {
-				if ((char) ch == 'f') {
-					filename = go.optArgGet();
-				} else if ((char) ch == 'e') {
-					endPointName = go.optArgGet();
-				} else if ((char) ch == 'h') {
-					System.out.println(usage);
-		            System.exit(0);
-				} else {
-					System.exit(1);
-				}
-			}
-		}
+//		go = new GetOpt(args, "hf:e:");
+//		go.optErr = true;
+//		int ch = -1;
+//		serverindexPathToFile = "";
+//		endPointName = "";
+//		String usage = "Usage: -f \"/path/to/serverindex.xml\" | -e \"endPointName\" | -h";
+//		
+//		if(args.length == 0) {
+//			System.out.println(usage);
+//            System.exit(0);
+//		} else {
+//			while ((ch = go.getopt()) != GetOpt.optEOF) {
+//				if ((char) ch == 'f') {
+//					serverindexPathToFile = go.optArgGet();
+//				} else if ((char) ch == 'e') {
+//					endPointName = go.optArgGet();
+//				} else if ((char) ch == 'h') {
+//					System.out.println(usage);
+//		            System.exit(0);
+//				} else {
+//					System.exit(1);
+//				}
+//			}
+//		}
 		
 		// New instance of FileExplorer class
 		search = new FileExplorer();
 		
 		// Find profileRegistry.xml file
-		search.searchFile("/aplicaciones", "profileRegistry.xml");
+		search.searchFile("/opt/IBM", "profileRegistry.xml");
 		
-		// New instance of ServerindexParser class
-		serverindexXml = new ServerindexParser();
-
-		// Parse serverindex.xml file
-		serverindexXml.parse(filename);
-
-		// Get Jvms ArrayList
-		jvms = serverindexXml.getJvms();
-
-		// Jvms array iteration
+		// New instance of ProfileRegistryParser class
+		profileRegistryXml = new ProfileRegistryParser();
+		
+		// Parse profileRegistry.xml file
+		profileRegistryXml.parse();
+		
+		// Get Profiles ArrayList
+		profiles = profileRegistryXml.getProfiles();
+		
+		// Profiles array iteration
 		int index = 0;
-		while (index < jvms.size()) {
-			Jvm jvm = jvms.get(index);
+		while (index < profiles.size()) {
+			Profile profile = profiles.get(index);
 
-			// For each Jvm print data
-			jvm.printEndPointsData(endPointName);
-			// jvm.printAppsData();
+			// For each Profile print data
+			profile.printProfileData();
 
 			++index;
 		}
+		
+		// New instance of ServerindexParser class
+//		serverindexXml = new ServerindexParser();
+
+		// Parse serverindex.xml file
+//		serverindexXml.parse(serverindexPathToFile);
+
+		// Get Jvms ArrayList
+//		jvms = serverindexXml.getJvms();
+
+		// Jvms array iteration
+//		int index = 0;
+//		while (index < jvms.size()) {
+//			Jvm jvm = jvms.get(index);
+//
+//			// For each Jvm print data
+//			jvm.printEndPointsData(endPointName);
+//			// jvm.printAppsData();
+//
+//			++index;
+//		}
 	}
 }
