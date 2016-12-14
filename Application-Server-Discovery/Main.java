@@ -24,14 +24,16 @@ package main;
 
 import java.util.ArrayList;
 
+import was.WasProductParser;
 import was.Profile;
-//import was.Jvm;
 import was.ProfileRegistryParser;
+//import was.Jvm;
 //import was.ServerindexParser;
 
 public class Main {
 //	private static GetOpt go;
 	private static FileExplorer search;
+	private static WasProductParser wasProduct;
 	private static ProfileRegistryParser profileRegistryXml;
 	private static ArrayList<Profile> profiles;
 //	private static ServerindexParser serverindexXml;
@@ -70,6 +72,17 @@ public class Main {
 		
 		// Find profileRegistry.xml file
 		search.searchFile("/opt/IBM", "profileRegistry.xml");
+		
+		
+		// New instance of WasProductParser class
+		wasProduct = new WasProductParser();
+		
+		// Parse WAS.product file
+		wasProduct.parse();
+		
+		// Print WAS product data
+		wasProduct.getWas().printWasData();
+		
 		
 		// New instance of ProfileRegistryParser class
 		profileRegistryXml = new ProfileRegistryParser();
