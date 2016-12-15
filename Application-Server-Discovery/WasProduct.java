@@ -29,7 +29,7 @@ public class WasProduct {
 	private String date;
 	private String level;
 	
-	/* Was class constructor:
+	/* WasProduct class constructor:
 	 * @name: Was name.
 	 * @id: Was id.
 	 * @version: Was version.
