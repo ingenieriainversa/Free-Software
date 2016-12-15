@@ -22,69 +22,77 @@
 
 package was;
 
+import java.util.ArrayList;
+
 public class Was {
-	private String name;
-	private String id;
-	private String version;
-	private String date;
-	private String level;
+	private WasProduct wasProduct;
+	private ArrayList<Profile> profiles;
+	private ArrayList<Jvm> jvms;
 	
 	/* Was class constructor:
-	 * @name: Was name.
-	 * @id: Was id.
-	 * @version: Was version.
-	 * @date: Was build date.
-	 * @level: Was build level.
+	 * @wasProduct: WAS product data.
+	 * @profiles: WAS profiles ArrayList.
+	 * @jvms: WAS Jvms ArrayList.
 	 */
-	public Was(String name, String id, String version, String date, String level) {
-		setName(name);
-		setId(id);
-		setVersion(version);
-		setDate(date);
-		setLevel(level);
+	public Was(WasProduct wasProduct, ArrayList<Profile> profiles, ArrayList<Jvm> jvms) {
+		setWasproduct(wasProduct);
+		setProfiles(profiles);
+		setJvms(jvms);
 	}
 
-	public String getName() {
-		return name;
+	public WasProduct getWasProduct() {
+		return wasProduct;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setWasproduct(WasProduct wasProduct) {
+		this.wasProduct = wasProduct;
 	}
 
-	public String getId() {
-		return id;
+	public ArrayList<Profile> getProfiles() {
+		return profiles;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setProfiles(ArrayList<Profile> profiles) {
+		this.profiles = profiles;
 	}
 
-	public String getVersion() {
-		return version;
+	public ArrayList<Jvm> getJvms() {
+		return jvms;
 	}
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public String getLevel() {
-		return level;
-	}
-
-	public void setLevel(String level) {
-		this.level = level;
+	public void setJvms(ArrayList<Jvm> jvms) {
+		this.jvms = jvms;
 	}
 	
-	public void printWasData() {
-		System.out.printf("%s;%s;%s;%s;%s\n", getName(), getId(), getVersion(), getDate(), getLevel());
+	public void printWasProductData() {
+		// Print Was product data
+		wasProduct.printWasData();
+	}
+	
+	public void printListOfProfiles() {
+		// Profiles array iteration
+		int index = 0;
+		while (index < profiles.size()) {
+			Profile profile = profiles.get(index);
+
+			// For each Profile print data
+			profile.printProfileData();
+
+			++index;
+		}
+	}
+	
+	public void printListOfJvms(String endPointName) {
+		// Jvms array iteration
+		int index = 0;
+		while (index < jvms.size()) {
+			Jvm jvm = jvms.get(index);
+
+			// For each Jvm print data
+			jvm.printEndPointsData(endPointName);
+			// jvm.printAppsData();
+
+			++index;
+		}
 	}
 }
