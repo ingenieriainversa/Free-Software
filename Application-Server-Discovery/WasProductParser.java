@@ -16,7 +16,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class WasProductParser {
-	private Was was;
+	private WasProduct wasProduct;
 	private String id;
 	private String version;
 	private String date;
@@ -67,7 +67,7 @@ public class WasProductParser {
 						level = productChildNode.getAttributes().getNamedItem("level").getTextContent();
 					}
 					
-					was = new Was(name, id, version, date, level);
+					wasProduct = new WasProduct(name, id, version, date, level);
 				}
 			}
 			
@@ -82,7 +82,7 @@ public class WasProductParser {
 		}
 	}
 	
-	public Was getWas() {
-		return was;
+	public WasProduct getWasProduct() {
+		return wasProduct;
 	}
 }
