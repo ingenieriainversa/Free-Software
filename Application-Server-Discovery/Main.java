@@ -81,7 +81,7 @@ public class Main {
 		wasProduct.parse();
 		
 		// Print WAS product data
-		wasProduct.getWas().printWasData();
+		wasProduct.getWasProduct().printWasData();
 		
 		
 		// New instance of ProfileRegistryParser class
