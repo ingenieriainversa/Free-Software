@@ -33,7 +33,7 @@ import was.Jvm;
 import was.ServerindexParser;
 
 public class Main {
-//	private static GetOpt go;
+	private static GetOpt go;
 //	private static FileExplorer search;
 	private static Was was;
 	private static WasProductParser wasProduct;
@@ -42,34 +42,30 @@ public class Main {
 	private static ArrayList<Profile> profiles;
 	private static ServerindexParser serverindexXml;
 	private static ArrayList<Jvm> jvms;
-//	private static String serverindexPathToFile;
-//	private static String endPointName;
+	private static String was_home;
 
 	public static void main(String[] args) {
-//		go = new GetOpt(args, "hf:e:");
-//		go.optErr = true;
-//		int ch = -1;
-//		serverindexPathToFile = "";
-//		endPointName = "";
-//		String usage = "Usage: -f \"/path/to/serverindex.xml\" | -e \"endPointName\" | -h";
-//		
-//		if(args.length == 0) {
-//			System.out.println(usage);
-//            System.exit(0);
-//		} else {
-//			while ((ch = go.getopt()) != GetOpt.optEOF) {
-//				if ((char) ch == 'f') {
-//					serverindexPathToFile = go.optArgGet();
-//				} else if ((char) ch == 'e') {
-//					endPointName = go.optArgGet();
-//				} else if ((char) ch == 'h') {
-//					System.out.println(usage);
-//		            System.exit(0);
-//				} else {
-//					System.exit(1);
-//				}
-//			}
-//		}
+		go = new GetOpt(args, "hp:");
+		go.optErr = true;
+		int ch = -1;
+		was_home = "";
+		String usage = "Usage: -p \"/opt/IBM/WebSphere/AppServer\" | -h";
+		
+		if(args.length == 0) {
+			System.out.println(usage);
+            System.exit(0);
+		} else {
+			while ((ch = go.getopt()) != GetOpt.optEOF) {
+				if ((char) ch == 'p') {
+					was_home = go.optArgGet();
+				} else if ((char) ch == 'h') {
+					System.out.println(usage);
+		            System.exit(0);
+				} else {
+					System.exit(1);
+				}
+			}
+		}
 		
 		// New instance of FileExplorer class
 //		search = new FileExplorer();
@@ -81,7 +77,7 @@ public class Main {
 		// New instance of WasProductParser class
 		wasProduct = new WasProductParser();
 		// Parse WAS.product file
-		wasProduct.parse();
+		wasProduct.parse(was_home);
 		// Get WAS product data
 		wasProductData = wasProduct.getWasProduct();
 		
@@ -89,7 +85,7 @@ public class Main {
 		// New instance of ProfileRegistryParser class
 		profileRegistryXml = new ProfileRegistryParser();
 		// Parse profileRegistry.xml file
-		profileRegistryXml.parse();
+		profileRegistryXml.parse(was_home);
 		// Get Profiles ArrayList
 		profiles = profileRegistryXml.getProfiles();
 		
@@ -105,10 +101,25 @@ public class Main {
 		// New instance of Was class
 		was = new Was(wasProductData, profiles, jvms);
 		
-		// EndPoint filter (can be empty)
-		String endPointName = "BOOTSTRAP_ADDRESS"; 
+		System.out.println("Product data:");
 		was.printWasProductData();
-		was.printListOfProfiles();
-		was.printListOfJvms(endPointName);
+		
+		System.out.println("\nProfile list:");
+		was.printProfileList();
+		
+		// EndPoint filter (can be empty)
+//		String endPointName = "BOOTSTRAP_ADDRESS";
+//		was.printListOfJvms(endPointName);
+		
+		System.out.println("\nJvm list:");
+		int profileIndex = 0;
+		while(profileIndex < was.getProfiles().size()) {
+			Profile profile = was.getProfiles().get(profileIndex);
+			
+			String profile_home = profile.getPath();
+			System.out.println(profile_home);
+			
+			++profileIndex;
+		}
 	}
 }
