@@ -24,20 +24,24 @@ package main;
 
 import java.util.ArrayList;
 
+import was.Was;
 import was.WasProductParser;
+import was.WasProduct;
 import was.Profile;
 import was.ProfileRegistryParser;
-//import was.Jvm;
-//import was.ServerindexParser;
+import was.Jvm;
+import was.ServerindexParser;
 
 public class Main {
 //	private static GetOpt go;
-	private static FileExplorer search;
+//	private static FileExplorer search;
+	private static Was was;
 	private static WasProductParser wasProduct;
+	private static WasProduct wasProductData;
 	private static ProfileRegistryParser profileRegistryXml;
 	private static ArrayList<Profile> profiles;
-//	private static ServerindexParser serverindexXml;
-//	private static ArrayList<Jvm> jvms;
+	private static ServerindexParser serverindexXml;
+	private static ArrayList<Jvm> jvms;
 //	private static String serverindexPathToFile;
 //	private static String endPointName;
 
@@ -68,61 +72,43 @@ public class Main {
 //		}
 		
 		// New instance of FileExplorer class
-		search = new FileExplorer();
+//		search = new FileExplorer();
 		
 		// Find profileRegistry.xml file
-		search.searchFile("/opt/IBM", "profileRegistry.xml");
+//		search.searchFile("/opt/IBM", "profileRegistry.xml");
 		
 		
 		// New instance of WasProductParser class
 		wasProduct = new WasProductParser();
-		
 		// Parse WAS.product file
 		wasProduct.parse();
-		
-		// Print WAS product data
-		wasProduct.getWasProduct().printWasData();
+		// Get WAS product data
+		wasProductData = wasProduct.getWasProduct();
 		
 		
 		// New instance of ProfileRegistryParser class
 		profileRegistryXml = new ProfileRegistryParser();
-		
 		// Parse profileRegistry.xml file
 		profileRegistryXml.parse();
-		
 		// Get Profiles ArrayList
 		profiles = profileRegistryXml.getProfiles();
 		
-		// Profiles array iteration
-		int index = 0;
-		while (index < profiles.size()) {
-			Profile profile = profiles.get(index);
-
-			// For each Profile print data
-			profile.printProfileData();
-
-			++index;
-		}
 		
 		// New instance of ServerindexParser class
-//		serverindexXml = new ServerindexParser();
-
+		serverindexXml = new ServerindexParser();
 		// Parse serverindex.xml file
-//		serverindexXml.parse(serverindexPathToFile);
-
+		serverindexXml.parse();
 		// Get Jvms ArrayList
-//		jvms = serverindexXml.getJvms();
-
-		// Jvms array iteration
-//		int index = 0;
-//		while (index < jvms.size()) {
-//			Jvm jvm = jvms.get(index);
-//
-//			// For each Jvm print data
-//			jvm.printEndPointsData(endPointName);
-//			// jvm.printAppsData();
-//
-//			++index;
-//		}
+		jvms = serverindexXml.getJvms();
+		
+		
+		// New instance of Was class
+		was = new Was(wasProductData, profiles, jvms);
+		
+		// EndPoint filter (can be empty)
+		String endPointName = "BOOTSTRAP_ADDRESS"; 
+		was.printWasProductData();
+		was.printListOfProfiles();
+		was.printListOfJvms(endPointName);
 	}
 }
