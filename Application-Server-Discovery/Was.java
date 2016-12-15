@@ -69,20 +69,20 @@ public class Was {
 		wasProduct.printWasData();
 	}
 	
-	public void printListOfProfiles() {
+	public void printProfileList() {
 		// Profiles array iteration
 		int index = 0;
 		while (index < profiles.size()) {
 			Profile profile = profiles.get(index);
 
 			// For each Profile print data
-			profile.printProfileData();
+			System.out.println(profile.getName());
 
 			++index;
 		}
 	}
 	
-	public void printListOfJvms(String endPointName) {
+	public void printJvmList(String endPointName) {
 		// Jvms array iteration
 		int index = 0;
 		while (index < jvms.size()) {
