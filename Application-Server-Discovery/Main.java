@@ -22,6 +22,7 @@
 
 package main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import was.Was;
@@ -31,6 +32,7 @@ import was.Profile;
 import was.ProfileRegistryParser;
 import was.Jvm;
 import was.ServerindexParser;
+import was.setupCmdLine;
 
 public class Main {
 	private static GetOpt go;
@@ -43,8 +45,9 @@ public class Main {
 	private static ServerindexParser serverindexXml;
 	private static ArrayList<Jvm> jvms;
 	private static String was_home;
+	private static setupCmdLine setupCmdLine;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		go = new GetOpt(args, "hp:");
 		go.optErr = true;
 		int ch = -1;
@@ -106,6 +109,9 @@ public class Main {
 		
 		System.out.println("\nProfile list:");
 		was.printProfileList();
+		
+		setupCmdLine = new setupCmdLine();
+		setupCmdLine.getCell(was_home);
 		
 		// EndPoint filter (can be empty)
 //		String endPointName = "BOOTSTRAP_ADDRESS";
