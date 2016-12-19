@@ -44,7 +44,7 @@ public class WasProductParser {
 	private String date;
 	private String level;
 	
-	public void parse() {
+	public void parse(String was_home) {
 		try {
 			// Create a new DocumentBuilder instance
 			DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
