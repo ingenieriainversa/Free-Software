@@ -32,7 +32,7 @@ import was.Profile;
 import was.ProfileRegistryParser;
 import was.Jvm;
 import was.ServerindexParser;
-import was.setupCmdLine;
+import was.SetupCmdLine;
 
 public class Main {
 	private static GetOpt go;
@@ -45,7 +45,7 @@ public class Main {
 	private static ServerindexParser serverindexXml;
 	private static ArrayList<Jvm> jvms;
 	private static String was_home;
-	private static setupCmdLine setupCmdLine;
+	private static SetupCmdLine setupCmdLine;
 
 	public static void main(String[] args) throws IOException {
 		go = new GetOpt(args, "hp:");
@@ -110,7 +110,7 @@ public class Main {
 		System.out.println("\nProfile list:");
 		was.printProfileList();
 		
-		setupCmdLine = new setupCmdLine();
+		setupCmdLine = new SetupCmdLine();
 		setupCmdLine.getCell(was_home);
 		
 		// EndPoint filter (can be empty)
