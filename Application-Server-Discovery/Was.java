@@ -27,24 +27,21 @@ import java.util.ArrayList;
 public class Was {
 	private WasProduct wasProduct;
 	private ArrayList<Profile> profiles;
-	private ArrayList<Jvm> jvms;
 	
 	/* Was class constructor:
 	 * @wasProduct: WAS product data.
 	 * @profiles: WAS profiles ArrayList.
-	 * @jvms: WAS Jvms ArrayList.
 	 */
-	public Was(WasProduct wasProduct, ArrayList<Profile> profiles, ArrayList<Jvm> jvms) {
-		setWasproduct(wasProduct);
+	public Was(WasProduct wasProduct, ArrayList<Profile> profiles) {
+		setWasProduct(wasProduct);
 		setProfiles(profiles);
-		setJvms(jvms);
 	}
 
 	public WasProduct getWasProduct() {
 		return wasProduct;
 	}
 
-	public void setWasproduct(WasProduct wasProduct) {
+	public void setWasProduct(WasProduct wasProduct) {
 		this.wasProduct = wasProduct;
 	}
 
@@ -55,20 +52,13 @@ public class Was {
 	public void setProfiles(ArrayList<Profile> profiles) {
 		this.profiles = profiles;
 	}
-
-	public ArrayList<Jvm> getJvms() {
-		return jvms;
-	}
-
-	public void setJvms(ArrayList<Jvm> jvms) {
-		this.jvms = jvms;
-	}
 	
+	// Print Was product data
 	public void printWasProductData() {
-		// Print Was product data
 		wasProduct.printWasData();
 	}
 	
+	// Print a profile name list
 	public void printProfileList() {
 		// Profiles array iteration
 		int index = 0;
@@ -81,19 +71,4 @@ public class Was {
 			++index;
 		}
 	}
-	
-	public void printJvmList(String endPointName) {
-		// Jvms array iteration
-		int index = 0;
-		while (index < jvms.size()) {
-			Jvm jvm = jvms.get(index);
-
-			// For each Jvm print data
-			jvm.printEndPointsData(endPointName);
-			// jvm.printAppsData();
-
-			++index;
-		}
-	}
 }
-
