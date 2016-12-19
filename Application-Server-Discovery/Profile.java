@@ -22,13 +22,25 @@
 
 package was;
 
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Properties;
+
 public class Profile {
+	
+	// New instance of Properties class
+	private Properties propertiesFile = new Properties();
 	
 	private String isAReservationTicket;
 	private String isDefault;
 	private String name;
 	private String path;
 	private String template;
+	private String cell;
+	private String node;
+	private String serverindex;
+	private ArrayList<Jvm> jvms;
 	
 	/* Jvm class constructor:
 	 * @isAReservationTicket: Profile isAReservationTicket.
@@ -37,12 +49,24 @@ public class Profile {
 	 * @path: Profile path.
 	 * @template: Profile template.
 	 */
-	public Profile(String isAReservationTicket, String isDefault, String name, String path, String template) {
+	public Profile(String isAReservationTicket, String isDefault, String name, String path, String template) throws IOException {
 		setIsAReservationTicket(isAReservationTicket);
 		setIsDefault(isDefault);
 		setName(name);
 		setPath(path);
 		setTemplate(template);
+		
+		// Load properties file
+		propertiesFile.load(new FileInputStream(path+"/bin/setupCmdLine.sh"));
+		
+		// Set atributtes with propertiesFile properties values
+		setCell(propertiesFile.getProperty("WAS_CELL"));
+		setNode(propertiesFile.getProperty("WAS_NODE"));
+		
+		// Set serverindex attribute with serverindex.xml absolute path
+		setServerindex(path, cell, node);
+		
+		setJvms(null);
 	}
 
 	public String getIsAReservationTicket() {
@@ -85,7 +109,85 @@ public class Profile {
 		this.template = template;
 	}
 	
+	public String getCell() {
+		return cell;
+	}
+
+	public void setCell(String cell) {
+		this.cell = cell;
+	}
+
+	public String getNode() {
+		return node;
+	}
+
+	public void setNode(String node) {
+		this.node = node;
+	}
+	
+	public String getServerindex() {
+		return serverindex;
+	}
+
+	public void setServerindex(String path, String cell, String node) {
+		serverindex = path+"/config/cells/"+cell+"/nodes/"+node+"/serverindex.xml";
+	}
+	
+	public ArrayList<Jvm> getJvms() {
+		return jvms;
+	}
+
+	public void setJvms(ArrayList<Jvm> jvms) {
+		this.jvms = jvms;
+	}
+	
 	public void printProfileData() {
-		System.out.printf("%s;%s;%s;%s;%s\n", getIsAReservationTicket(), getIsDefault(), getName(), getPath(), getTemplate());
+		System.out.printf("%s;%s;%s;%s;%s;%s;%s;%s\n",
+				getIsAReservationTicket(), getIsDefault(), getName(), getPath(),
+				getTemplate(), getCell(), getNode(), getServerindex());
+	}
+	
+	/* Method that prints a Jvm list filtered by endPointName:
+	 * @endPointName: The filter.
+	 */ 
+	public void printJvmListFilteredByEndPointName(String endPointName) {
+		// Jvms array iteration
+		int index = 0;
+		while (index < jvms.size()) {
+			Jvm jvm = jvms.get(index);
+
+			// For each Jvm print data
+			jvm.printEndPointsData(endPointName);
+
+			++index;
+		}
+	}
+	
+	// Prints a Jvm names list
+	public void printJvmList() {
+		// Jvms array iteration
+		int index = 0;
+		while (index < jvms.size()) {
+			Jvm jvm = jvms.get(index);
+
+			// For each Jvm print data
+			System.out.println(jvm.getServerName());
+
+			++index;
+		}
+	}
+	
+	// Prints a Jvm apps list
+	public void printJvmAppList() {
+		// Jvms array iteration
+		int index = 0;
+		while (index < jvms.size()) {
+			Jvm jvm = jvms.get(index);
+
+			// For each Jvm print data
+			jvm.printAppsData();
+
+			++index;
+		}
 	}
 }
