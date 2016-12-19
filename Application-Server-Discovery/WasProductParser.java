@@ -46,11 +46,17 @@ public class WasProductParser {
 	
 	public void parse(String was_home) {
 		try {
-			// Create a new DocumentBuilder instance
-			DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			// Create a new DocumentBuilderFactory instance
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			
+			// Set to false load external DTD
+			dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+			
+			// Create a new DocumentBuilder instance 
+			DocumentBuilder documentBuilder = dbf.newDocumentBuilder();
 			
 			// Process the XML file and obtain the Document object
-			Document doc = documentBuilder.parse(new InputSource(new FileInputStream("src/was/WAS.product")));
+			Document doc = documentBuilder.parse(new InputSource(new FileInputStream(was_home+"/properties/version/WAS.product")));
 			
 			// Get product root node
 			Element productNode = doc.getDocumentElement();
