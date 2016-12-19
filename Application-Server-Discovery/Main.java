@@ -22,7 +22,6 @@
 
 package main;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import was.Was;
@@ -32,11 +31,9 @@ import was.Profile;
 import was.ProfileRegistryParser;
 import was.Jvm;
 import was.ServerindexParser;
-import was.SetupCmdLine;
 
 public class Main {
 	private static GetOpt go;
-//	private static FileExplorer search;
 	private static Was was;
 	private static WasProductParser wasProduct;
 	private static WasProduct wasProductData;
@@ -45,9 +42,8 @@ public class Main {
 	private static ServerindexParser serverindexXml;
 	private static ArrayList<Jvm> jvms;
 	private static String was_home;
-	private static SetupCmdLine setupCmdLine;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		go = new GetOpt(args, "hp:");
 		go.optErr = true;
 		int ch = -1;
@@ -70,13 +66,6 @@ public class Main {
 			}
 		}
 		
-		// New instance of FileExplorer class
-//		search = new FileExplorer();
-		
-		// Find profileRegistry.xml file
-//		search.searchFile("/opt/IBM", "profileRegistry.xml");
-		
-		
 		// New instance of WasProductParser class
 		wasProduct = new WasProductParser();
 		// Parse WAS.product file
@@ -93,37 +82,46 @@ public class Main {
 		profiles = profileRegistryXml.getProfiles();
 		
 		
-		// New instance of ServerindexParser class
-		serverindexXml = new ServerindexParser();
-		// Parse serverindex.xml file
-		serverindexXml.parse();
-		// Get Jvms ArrayList
-		jvms = serverindexXml.getJvms();
-		
-		
 		// New instance of Was class
-		was = new Was(wasProductData, profiles, jvms);
+		was = new Was(wasProductData, profiles);
+		
 		
 		System.out.println("Product data:");
+		// Print all product data
 		was.printWasProductData();
 		
 		System.out.println("\nProfile list:");
+		// Print a profile list
 		was.printProfileList();
 		
-		setupCmdLine = new SetupCmdLine();
-		setupCmdLine.getCell(was_home);
 		
-		// EndPoint filter (can be empty)
-//		String endPointName = "BOOTSTRAP_ADDRESS";
-//		was.printListOfJvms(endPointName);
-		
-		System.out.println("\nJvm list:");
+		/* For each profile you can get, set or print
+		 * all data that you want about it.
+		 */
 		int profileIndex = 0;
 		while(profileIndex < was.getProfiles().size()) {
+			
+			// Get the profile
 			Profile profile = was.getProfiles().get(profileIndex);
 			
-			String profile_home = profile.getPath();
-			System.out.println(profile_home);
+			// New instance of ServerindexParser class
+			serverindexXml = new ServerindexParser();
+			
+			// Get the serverindex.xml absolute path
+			String serverindexFile = profile.getServerindex();
+			
+			// Parse serverindex.xml file
+			serverindexXml.parse(serverindexFile);
+			
+			// Get Jvms ArrayList
+			jvms = serverindexXml.getJvms();
+			
+			// For each profile set the jvm ArrayList
+			profile.setJvms(jvms);
+			
+			// For example, print the jvm name list
+			System.out.println("\n"+profile.getName()+" Jvm list:");
+			profile.printJvmList();
 			
 			++profileIndex;
 		}
