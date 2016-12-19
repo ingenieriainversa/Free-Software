@@ -43,7 +43,7 @@ public class ServerindexParser {
 	private static ArrayList<App> apps;
 	private static ArrayList<EndPoint> endPoints;
 	
-	public void parse() {
+	public void parse(String serverindexFile) {
 		
 		jvms = new ArrayList<Jvm>();
 		
@@ -53,7 +53,7 @@ public class ServerindexParser {
 			DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			
 			// Process the XML file and obtain the Document object
-			Document doc = documentBuilder.parse(new InputSource(new FileInputStream("src/was/serverindex.xml")));
+			Document doc = documentBuilder.parse(new InputSource(new FileInputStream(serverindexFile)));
 
 			// Get serverindex root node
 			Element serverindexNode = doc.getDocumentElement();
