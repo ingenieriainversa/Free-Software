@@ -41,7 +41,7 @@ import org.xml.sax.SAXException;
 public class ProfileRegistryParser {
 	private static ArrayList<Profile> profiles;
 	
-	public void parse() {
+	public void parse(String was_home) {
 		profiles = new ArrayList<Profile>();
 		
 		try {
