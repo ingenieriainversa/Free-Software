@@ -87,17 +87,16 @@ public class Jvm {
 	}
 	
 	public void printEndPointsData(String endPointName) {
-		
 		// EndPoints array iteration
 		int index = 0;
 		while(index < getEndPoints().size()) {
 			EndPoint endPoint = getEndPoints().get(index);
 			
 			if(endPointName.isEmpty()) {
-				// Print jvm data
+				// Print jvm data without filter
 				System.out.printf("%s;%s;%s;%s\n", getHostName(), getServerName(), getServerType(), endPoint.printData());
 			} else if(endPoint.getEndPointName().equals(endPointName)){
-				// Print jvm data
+				// Print jvm data filtered by endPointName
 				System.out.printf("%s;%s;%s;%s\n", getHostName(), getServerName(), getServerType(), endPoint.printData());
 			}
 			++index;
@@ -105,7 +104,6 @@ public class Jvm {
 	}
 	
 	public void printAppsData() {
-		
 		// Apps array iteration
 		int appIndex = 0;
 		while(appIndex < getApps().size()) {
