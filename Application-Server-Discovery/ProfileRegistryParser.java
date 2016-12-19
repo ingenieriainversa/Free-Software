@@ -49,7 +49,7 @@ public class ProfileRegistryParser {
 			DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			
 			// Process the XML file and obtain the Document object
-			Document doc = documentBuilder.parse(new InputSource(new FileInputStream("src/was/profileRegistry.xml")));
+			Document doc = documentBuilder.parse(new InputSource(new FileInputStream(was_home+"/properties/profileRegistry.xml")));
 			
 			// Get profiles root node
 			Element profilesNode = doc.getDocumentElement();
