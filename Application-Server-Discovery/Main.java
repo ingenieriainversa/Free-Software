@@ -36,7 +36,9 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.OptionGroup;
 
 public class Main {
 	private static Was was;
@@ -48,6 +50,7 @@ public class Main {
 	private static ArrayList<Jvm> jvms;
 	private static String mode;
 	private static String wasHome;
+	private static String outputFormat;
 	private static CommandLineParser parser;
 	private static CommandLine cmdLine;
 	
@@ -56,6 +59,8 @@ public class Main {
 		// Set required options to null
 		mode = null;
 		wasHome = null;
+		final String DEFAULT_FORMAT = "table";
+		outputFormat = DEFAULT_FORMAT;
 		
 		// New instance of Options class
 		Options options = new Options();
@@ -65,6 +70,12 @@ public class Main {
 		options.addOption("wasHome", true, "WAS installation path");
 		options.addOption("mode", true, "Output mode");
 		
+		// Both options can not be displayed simultaneously.
+        OptionGroup group =  new OptionGroup();  
+        group.addOption(new Option("csv", "Output in CSV format"));  
+        group.addOption(new Option("table", "Output in table format"));  
+        options.addOptionGroup(group);
+        
 		try {
 			parser = new DefaultParser();
 			cmdLine = parser.parse(options, args);
@@ -86,6 +97,15 @@ public class Main {
 			if (mode == null) {
 				throw new org.apache.commons.cli.ParseException("mode option is required");
 			}
+			
+			// Options -csv and -table for output format
+			if (cmdLine.hasOption("csv")){
+                outputFormat = "csv";
+            } else if (cmdLine.hasOption("table")){  
+            	outputFormat = "table";
+            } else {
+            	outputFormat = null;
+            }
 			
 		} catch (org.apache.commons.cli.ParseException ex) {
 			System.out.println(ex.getMessage());
