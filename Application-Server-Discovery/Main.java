@@ -32,8 +32,13 @@ import was.ProfileRegistryParser;
 import was.Jvm;
 import was.ServerindexParser;
 
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+
 public class Main {
-	private static GetOpt go;
 	private static Was was;
 	private static WasProductParser wasProduct;
 	private static WasProduct wasProductData;
@@ -41,35 +46,60 @@ public class Main {
 	private static ArrayList<Profile> profiles;
 	private static ServerindexParser serverindexXml;
 	private static ArrayList<Jvm> jvms;
-	private static String was_home;
-
+	private static String mode;
+	private static String wasHome;
+	private static CommandLineParser parser;
+	private static CommandLine cmdLine;
+	
 	public static void main(String[] args) {
-		go = new GetOpt(args, "hp:");
-		go.optErr = true;
-		int ch = -1;
-		was_home = "";
-		String usage = "Usage: -p \"/opt/IBM/WebSphere/AppServer\" | -h";
 		
-		if(args.length == 0) {
-			System.out.println(usage);
-            System.exit(0);
-		} else {
-			while ((ch = go.getopt()) != GetOpt.optEOF) {
-				if ((char) ch == 'p') {
-					was_home = go.optArgGet();
-				} else if ((char) ch == 'h') {
-					System.out.println(usage);
-		            System.exit(0);
-				} else {
-					System.exit(1);
-				}
+		// Set required options to null
+		mode = null;
+		wasHome = null;
+		
+		// New instance of Options class
+		Options options = new Options();
+		
+		// All options: name, alias, required and help text
+		options.addOption("h", "help", false, "Print help");
+		options.addOption("wasHome", true, "WAS installation path");
+		options.addOption("mode", true, "Output mode");
+		
+		try {
+			parser = new DefaultParser();
+			cmdLine = parser.parse(options, args);
+			
+			// Option -h or --help
+			if (cmdLine.hasOption("h")) {
+				new HelpFormatter().printHelp(Main.class.getCanonicalName(), options);
+				return;
 			}
+			
+			// Option -wasHome
+			wasHome = cmdLine.getOptionValue("wasHome");
+			if (wasHome == null) {
+				throw new org.apache.commons.cli.ParseException("wasHome option is required");
+			}
+			
+			// Option -mode
+			mode = cmdLine.getOptionValue("mode");
+			if (mode == null) {
+				throw new org.apache.commons.cli.ParseException("mode option is required");
+			}
+			
+		} catch (org.apache.commons.cli.ParseException ex) {
+			System.out.println(ex.getMessage());
+			new HelpFormatter().printHelp(Main.class.getCanonicalName(), options);
+			System.exit(1);
+		} catch (java.lang.NumberFormatException ex) {
+			new HelpFormatter().printHelp(Main.class.getCanonicalName(), options);
+			System.exit(1);
 		}
 		
 		// New instance of WasProductParser class
 		wasProduct = new WasProductParser();
 		// Parse WAS.product file
-		wasProduct.parse(was_home);
+		wasProduct.parse(wasHome);
 		// Get WAS product data
 		wasProductData = wasProduct.getWasProduct();
 		
@@ -77,7 +107,7 @@ public class Main {
 		// New instance of ProfileRegistryParser class
 		profileRegistryXml = new ProfileRegistryParser();
 		// Parse profileRegistry.xml file
-		profileRegistryXml.parse(was_home);
+		profileRegistryXml.parse(wasHome);
 		// Get Profiles ArrayList
 		profiles = profileRegistryXml.getProfiles();
 		
@@ -85,14 +115,17 @@ public class Main {
 		// New instance of Was class
 		was = new Was(wasProductData, profiles);
 		
+		if(mode.equals("productData")) {
+			System.out.println("Product data:");
+			// Print all product data
+			was.printWasProductData();
+		}
 		
-		System.out.println("Product data:");
-		// Print all product data
-		was.printWasProductData();
-		
-		System.out.println("\nProfile list:");
-		// Print a profile list
-		was.printProfileList();
+		if(mode.equals("profileList")) {
+			System.out.println("\nProfile list:");
+			// Print a profile list
+			was.printProfileList();
+		}
 		
 		
 		/* For each profile you can get, set or print
@@ -120,8 +153,8 @@ public class Main {
 			profile.setJvms(jvms);
 			
 			// For example, print the jvm name list
-			System.out.println("\n"+profile.getName()+" Jvm list:");
-			profile.printJvmList();
+//			System.out.println("\n"+profile.getName()+" Jvm list:");
+//			profile.printJvmList();
 			
 			++profileIndex;
 		}
