@@ -30,6 +30,7 @@ public class Jvm {
 	private String serverType;
 	private ArrayList<EndPoint> endPoints;
 	private ArrayList<App> apps;
+	private int countApps;
 	
 	/* Jvm class constructor:
 	 * @hostName: Jvm hostName.
@@ -43,6 +44,7 @@ public class Jvm {
 		setServerName(serverName);
 		setServerType(serverType);
 		setApps(apps);
+		setCountApps(apps);
 		setEndPoints(endPoints);
 	}
 	
@@ -78,12 +80,33 @@ public class Jvm {
 		this.apps = apps;
 	}
 	
+	public int getCountApps() {
+		return countApps;
+	}
+	
+	public void setCountApps(ArrayList<App> apps) {
+		countApps = apps.size();
+	}
+	
 	public ArrayList<EndPoint> getEndPoints() {
 		return endPoints;
 	}
 	
 	public void setEndPoints(ArrayList<EndPoint> endPoints) {
 		this.endPoints = endPoints;
+	}
+	
+	public void printJvmData(String profile, String cell, String node, String outputFormat) {
+		if (outputFormat.equals("csv")) {
+			System.out.printf("%s;%s;%s;%s;%s;%s;%s\n",
+					getHostName(), profile, cell, node, getServerName(), getServerType(), getCountApps());
+		} else if (outputFormat.equals("table")) {
+			String width = "%-13.13s";
+			System.out.printf(width + "%s\n" + width + "%s\n" + width + "%s\n" +
+			width + "%s\n" + width + "%s\n" + width + "%s\n" + width + "%d\n\n", 
+			"Hostname:", getHostName(), "Profile:", profile, "Cell:", cell, "Node:", node,
+			"Server name:", getServerName(), "Server type:", getServerType(), "Apps count:", getCountApps());
+		}
 	}
 	
 	public void printEndPointsData(String endPointName) {
