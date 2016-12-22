@@ -134,15 +134,13 @@ public class Main {
 		was = new Was(wasProductData, profiles);
 
 		if (mode.equals("productData")) {
-			System.out.println("Product data:");
 			// Print all product data
-			was.printWasProductData();
+			was.printWasProductData(outputFormat);
 		}
 
 		if (mode.equals("profileList")) {
-			System.out.println("\nProfile list:");
 			// Print a profile list
-			was.printProfileList();
+			was.printProfileList(outputFormat);
 		}
 
 		/*
