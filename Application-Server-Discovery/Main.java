@@ -103,8 +103,6 @@ public class Main {
 				outputFormat = "csv";
 			} else if (cmdLine.hasOption("table")) {
 				outputFormat = "table";
-			} else {
-				outputFormat = null;
 			}
 
 		} catch (org.apache.commons.cli.ParseException ex) {
@@ -134,45 +132,50 @@ public class Main {
 		was = new Was(wasProductData, profiles);
 
 		if (mode.equals("productData")) {
+			
 			// Print all product data
 			was.printWasProductData(outputFormat);
-		}
-
-		if (mode.equals("profileList")) {
+			
+		} else if (mode.equals("profileList")) {
+			
 			// Print a profile list
 			was.printProfileList(outputFormat);
-		}
-
-		/*
-		 * For each profile you can get, set or print all data that you want
-		 * about it.
-		 */
-		int profileIndex = 0;
-		while (profileIndex < was.getProfiles().size()) {
-
-			// Get the profile
-			Profile profile = was.getProfiles().get(profileIndex);
-
-			// New instance of ServerindexParser class
-			serverindexXml = new ServerindexParser();
-
-			// Get the serverindex.xml absolute path
-			String serverindexFile = profile.getServerindex();
-
-			// Parse serverindex.xml file
-			serverindexXml.parse(serverindexFile);
-
-			// Get Jvms ArrayList
-			jvms = serverindexXml.getJvms();
-
-			// For each profile set the jvm ArrayList
-			profile.setJvms(jvms);
-
-			// For example, print the jvm name list
-			// System.out.println("\n"+profile.getName()+" Jvm list:");
-			// profile.printJvmList();
-
-			++profileIndex;
+			
+		} else if (mode.equals("jvmList")) {
+			
+			// Print this header only if -csv option exist
+			if (cmdLine.hasOption("csv")) {
+				System.out.printf("%s;%s;%s;%s;%s;%s;%s\n",
+				"Hostname", "Profile", "Cell", "Node", "Server name", "Server type", "Apps count");
+			}
+			
+			int profileIndex = 0;
+			while (profileIndex < was.getProfiles().size()) {
+				
+				// Get the profile
+				Profile profile = was.getProfiles().get(profileIndex);
+				
+				// New instance of ServerindexParser class
+				serverindexXml = new ServerindexParser();
+				
+				// Get the serverindex.xml absolute path
+				String serverindexFile = profile.getServerindex();
+				
+				// Parse serverindex.xml file
+				serverindexXml.parse(serverindexFile);
+				
+				// Get Jvms ArrayList
+				jvms = serverindexXml.getJvms();
+				
+				// For each profile set the jvm ArrayList
+				profile.setJvms(jvms);
+				
+				// Print the jvm data list
+				 profile.printJvmList(outputFormat);
+				 
+				++profileIndex;
+			}
+			
 		}
 	}
 }
