@@ -84,7 +84,13 @@ public class WasProduct {
 		this.level = level;
 	}
 	
-	public void printWasData() {
-		System.out.printf("%s;%s;%s;%s;%s\n", getName(), getId(), getVersion(), getDate(), getLevel());
+	public void printWasData(String outputFormat) {
+		if(outputFormat.equals("csv")) {
+			System.out.printf("%s;%s;%s;%s;%s\n%s;%s;%s;%s;%s\n", "Name", "ID", "Version", "Date", "Level", getName(), getId(), getVersion(), getDate(), getLevel());
+		} else if(outputFormat.equals("table")) {
+			String width = "%-9.9s";
+			System.out.printf(width+"%s\n"+width+"%s\n"+width+"%s\n"+width+"%s\n"+width+"%s\n",
+					"Name:", getName(), "ID:", getId(), "Version:", getVersion(), "Date:", getDate(), "Level:", getLevel());
+		}
 	}
 }
