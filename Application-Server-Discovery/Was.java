@@ -54,12 +54,12 @@ public class Was {
 	}
 	
 	// Print Was product data
-	public void printWasProductData() {
-		wasProduct.printWasData();
+	public void printWasProductData(String outputFormat) {
+		wasProduct.printWasData(outputFormat);
 	}
 	
 	// Print a profile name list
-	public void printProfileList() {
+	public void printProfileList(String outputFormat) {
 		// Profiles array iteration
 		int index = 0;
 		while (index < profiles.size()) {
